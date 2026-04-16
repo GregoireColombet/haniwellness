@@ -262,7 +262,6 @@ p {
     font-weight: 400;
     letter-spacing: 0.08em;
     color: var(--charcoal);
-    display: flex;
     transition: color var(--transition);
 }
 .nav-logo-text em {
@@ -280,7 +279,6 @@ p {
     display: none;
     align-items: center;
     gap: 40px;
-    display: flex;
 }
 .nav-links a {
     font-size: 0.72rem;
@@ -315,6 +313,9 @@ p {
 .site-nav:not(.scrolled) .nav-links a:hover,
 .site-nav:not(.scrolled) .nav-links a.active {
     color: var(--yellow-gold-light);
+}
+.site-nav.scrolled .nav-links {
+    display: flex;
 }
 .nav-lang {
     font-size: 0.68rem;
