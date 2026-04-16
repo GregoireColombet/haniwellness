@@ -323,6 +323,24 @@ p { font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--warm-gray); line-height:
   line-height: 1; margin-bottom: 16px;
 }
 
+/* ── Pricing ─────────────────────────────── */
+.pricing-amount {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  color: var(--charcoal);
+  font-family: var(--font-display);
+}
+.pricing-unit {
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+  font-family: var(--font-body);
+}
+.pricing-extra {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--warm-gray);
+}
+
 /* ── Feature Block ───────────────────────── */
 .feature-block {
   display: grid; grid-template-columns: 1fr;
