@@ -419,6 +419,15 @@ p {
         display: flex;
     }
 }*/
+@media (max-width: 767px) {
+    .nav-links {
+        display: none !important;
+    }
+    .nav-hamburger {
+        display: flex !important;
+    }
+}
+
 @media (min-width: 768px) {
     .nav-hamburger {
         display: none;
