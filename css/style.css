@@ -436,6 +436,17 @@ p {
         display: flex;
     }
 }
+
+@media (max-width: 767px) {
+    .site-nav .nav-links,
+    .site-nav.scrolled .nav-links {
+        display: none !important;
+    }
+    .site-nav .nav-hamburger,
+    .site-nav.scrolled .nav-hamburger {
+        display: flex !important;
+    }
+}
 /* ── Hero ─────────────────────────────────── */
 .hero {
     position: relative;
