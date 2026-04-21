@@ -380,6 +380,8 @@ p {
     padding: 20px clamp(20px, 5vw, 60px);
     z-index: 99;
     flex-direction: column;
+    max-height: calc(100svh - var(--nav-h)); /* Add this */
+    overflow-y: auto;
 }
 .nav-mobile-menu.open {
     display: flex;
@@ -397,28 +399,7 @@ p {
 .nav-mobile-menu a:hover {
     color: var(--yellow-gold);
 }
-/*
-@media (min-width: 768px) {
-    .nav-hamburger {
-        display: none;
-    }
-    .nav-links {
-        display: flex;
-    }
-}
-@media (max-width: 767px) {
-    .site-nav.scrolled .nav-links {
-        display: none !important;
-    }
 
-    .site-nav.scrolled .nav-hamburger {
-        display: flex;
-    }
-
-    .site-nav.scrolled .nav-right {
-        display: flex;
-    }
-}*/
 @media (max-width: 767px) {
     .nav-links {
         display: none !important;
