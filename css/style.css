@@ -314,9 +314,6 @@ p {
 .site-nav:not(.scrolled) .nav-links a.active {
     color: var(--yellow-gold-light);
 }
-.site-nav.scrolled .nav-links {
-    display: flex;
-}
 .nav-lang {
     font-size: 0.68rem;
     font-weight: 500;
@@ -400,12 +397,25 @@ p {
 .nav-mobile-menu a:hover {
     color: var(--yellow-gold);
 }
-
+/*
 @media (min-width: 768px) {
     .nav-hamburger {
         display: none;
     }
     .nav-links {
+        display: flex;
+    }
+}*/
+@media (max-width: 767px) {
+    .site-nav.scrolled .nav-links {
+        display: none !important;
+    }
+
+    .site-nav.scrolled .nav-hamburger {
+        display: flex;
+    }
+
+    .site-nav.scrolled .nav-right {
         display: flex;
     }
 }
