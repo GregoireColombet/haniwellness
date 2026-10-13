@@ -1,8 +1,229 @@
 /* ============================================
-   HANIWELLNESS — main.js
-   Nav scroll, mobile menu, intersection reveals
+   HANIWELLNESS — Coming Soon / Maintenance Shield
    ============================================ */
+const MAINTENANCE_CONFIG = {
+  // Set to false to immediately take the website live
+  active: true,
+  // URL query parameter for developer/client preview: ?preview=hani
+  previewParam: 'preview',
+  // Secret value to unlock preview mode
+  previewSecret: 'hani',
+  // Local storage key for persistent session
+  storageKey: 'hw_preview_access'
+};
 
+(function initMaintenanceShield() {
+  if (!MAINTENANCE_CONFIG.active) return;
+
+  // 1. Process URL query parameters
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const queryVal = params.get(MAINTENANCE_CONFIG.previewParam);
+    if (queryVal && queryVal.toLowerCase() === MAINTENANCE_CONFIG.previewSecret.toLowerCase()) {
+      localStorage.setItem(MAINTENANCE_CONFIG.storageKey, 'granted');
+    } else if (queryVal === 'reset' || queryVal === 'exit') {
+      localStorage.removeItem(MAINTENANCE_CONFIG.storageKey);
+    }
+  } catch (err) {
+    // Graceful fallback if storage or search params are restricted
+  }
+
+  // 2. Check preview access status
+  let hasPreviewAccess = false;
+  try {
+    hasPreviewAccess = localStorage.getItem(MAINTENANCE_CONFIG.storageKey) === 'granted';
+  } catch (err) {}
+
+  // 3. If preview mode is granted, render floating preview badge and unblock site
+  if (hasPreviewAccess) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mountPreviewBadge);
+    } else {
+      mountPreviewBadge();
+    }
+    return;
+  }
+
+  // 4. Otherwise, mount the Coming Soon luxury shield
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountShield);
+  } else {
+    mountShield();
+  }
+
+  function mountPreviewBadge() {
+    if (document.getElementById('hw-preview-badge')) return;
+
+    const badge = document.createElement('div');
+    badge.id = 'hw-preview-badge';
+    badge.innerHTML = `
+      <span class="hw-preview-status">
+        <span class="hw-status-dot"></span>
+        Preview Mode
+      </span>
+      <button type="button" id="hw-exit-preview" title="Exit Preview Mode and return to Coming Soon">Exit Preview</button>
+    `;
+    document.body.appendChild(badge);
+
+    const exitBtn = badge.querySelector('#hw-exit-preview');
+    if (exitBtn) {
+      exitBtn.addEventListener('click', function () {
+        try {
+          localStorage.removeItem(MAINTENANCE_CONFIG.storageKey);
+        } catch (e) {}
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete(MAINTENANCE_CONFIG.previewParam);
+          window.location.href = url.pathname + (url.search ? url.search : '');
+        } catch (e) {
+          window.location.reload();
+        }
+      });
+    }
+  }
+
+  function mountShield() {
+    if (document.getElementById('hw-maintenance-shield')) return;
+
+    document.body.classList.add('hw-shield-active');
+
+    const isChinesePage = window.location.pathname.includes('/zh/');
+    let currentLang = isChinesePage ? 'zh' : 'en';
+
+    const basePath = isChinesePage ? '../' : '';
+    const qrSrc = basePath + 'images/line-qr-code-haniwellness.png';
+
+    const content = {
+      en: {
+        pill: 'EST. TAIPEI · COMING SOON',
+        title: 'Something Transformative<br><em>is Coming Soon</em>',
+        desc: 'We are curating an elevated sanctuary dedicated to private personal training, aerial yoga, and professional color styling by Tsao Hani in Taipei.',
+        cardTitle: 'Private Consultations &amp; Bookings Open',
+        cardSubtitle: 'Xinyi Studio · Neihu Studio · Private Gym Sessions',
+        qrAlt: 'LINE QR code to connect with Haniwellness',
+        lineDesc: 'Scan or connect with Tsao Hani directly on LINE for bookings and consultations:',
+        btnLine: 'Open LINE App',
+        igBtn: 'Instagram (@hani_c1)',
+        fbBtn: 'Facebook',
+        services: 'Personal Training · Aerial Yoga · Color Analysis · Venue Rental',
+        switchBtn: '切換至中文',
+        secretHint: '(Click logo 3x for preview prompt)',
+        footer: '&copy; ' + new Date().getFullYear() + ' Haniwellness &middot; Tsao Hani. All rights reserved.'
+      },
+      zh: {
+        pill: '台北 · 全新蛻變 敬請期待',
+        title: '身心靈的優雅昇華<br><em>即將盛大呈獻</em>',
+        desc: '我們正在悉心籌備由 Tsao Hani 主理的頂級私人健身、空中瑜珈與個人色彩穿搭顧問體驗，帶給您由內而外的專屬自信。',
+        cardTitle: '私人課程與色彩諮詢 正常預約中',
+        cardSubtitle: '信義旗艦教室 · 內湖專業教室 · 到府尊爵私教',
+        qrAlt: '加入 Haniwellness 官方 LINE 預約',
+        lineDesc: '歡迎掃描下方 QR Code 或透過社群直接與 Hani 聯繫預約：',
+        btnLine: '開啟 LINE',
+        igBtn: 'Instagram (@hani_c1)',
+        fbBtn: 'Facebook 專頁',
+        services: '私人教練 · 空中瑜珈 · 孕婦體適能 · 個人色彩分析 · 私人場地租借',
+        switchBtn: 'English',
+        secretHint: '(點擊標誌 3 次開啟預覽通行碼)',
+        footer: '&copy; ' + new Date().getFullYear() + ' Haniwellness &middot; 曹哈妮 Tsao Hani. 版權所有'
+      }
+    };
+
+    const shield = document.createElement('div');
+    shield.id = 'hw-maintenance-shield';
+    shield.setAttribute('role', 'dialog');
+    shield.setAttribute('aria-modal', 'true');
+    shield.setAttribute('aria-label', 'Haniwellness Coming Soon');
+
+    function render(lang) {
+      const c = content[lang];
+      shield.innerHTML = `
+        <div class="hw-shield-container">
+          <div class="hw-shield-topbar">
+            <button type="button" class="hw-lang-toggle" id="hw-lang-btn" aria-label="Toggle language">${c.switchBtn}</button>
+          </div>
+
+          <div class="hw-shield-brand" id="hw-brand-logo" role="button" tabindex="0" title="${c.secretHint}">
+            Hani<em>wellness</em>
+          </div>
+
+          <div class="hw-shield-tag">${c.pill}</div>
+
+          <h1 class="hw-shield-title">${c.title}</h1>
+          <p class="hw-shield-desc">${c.desc}</p>
+
+          <div class="hw-shield-card">
+            <h2 class="hw-card-title">${c.cardTitle}</h2>
+            <p class="hw-card-subtitle">${c.cardSubtitle}</p>
+
+            <div class="hw-qr-wrap">
+              <img src="${qrSrc}" alt="${c.qrAlt}" width="130" height="130" class="hw-qr-img" />
+            </div>
+
+            <p class="hw-line-note">${c.lineDesc}</p>
+
+            <div class="hw-actions">
+              <a href="https://line.me/R/ti/p/@" target="_blank" rel="noopener noreferrer" class="hw-btn hw-btn-line">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right:2px"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.035 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.646 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.573-3.844 2.573-5.293z"/></svg>
+                ${c.btnLine}
+              </a>
+              <a href="https://www.instagram.com/hani_c1/" target="_blank" rel="noopener noreferrer" class="hw-btn" style="background:var(--ivory-dark);color:var(--charcoal);">
+                ${c.igBtn}
+              </a>
+            </div>
+
+            <div class="hw-social-row">
+              <span style="font-size:12px;opacity:0.8">${c.services}</span>
+              <span class="hw-dot">&middot;</span>
+              <a href="https://www.facebook.com/profile.php?id=100083695221580" target="_blank" rel="noopener noreferrer" class="hw-social-link">${c.fbBtn}</a>
+            </div>
+          </div>
+
+          <div class="hw-shield-footer">${c.footer}</div>
+        </div>
+      `;
+
+      // Language switcher click handler
+      const langBtn = shield.querySelector('#hw-lang-btn');
+      if (langBtn) {
+        langBtn.addEventListener('click', function () {
+          currentLang = currentLang === 'en' ? 'zh' : 'en';
+          render(currentLang);
+        });
+      }
+
+      // Triple-click on brand logo for secret unlock
+      const brandLogo = shield.querySelector('#hw-brand-logo');
+      if (brandLogo) {
+        let clicks = 0;
+        let timer = null;
+        brandLogo.addEventListener('click', function () {
+          clicks++;
+          clearTimeout(timer);
+          timer = setTimeout(function () { clicks = 0; }, 600);
+          if (clicks >= 3) {
+            clicks = 0;
+            const entered = prompt('Enter preview passphrase:');
+            if (entered && entered.trim().toLowerCase() === MAINTENANCE_CONFIG.previewSecret.toLowerCase()) {
+              try {
+                localStorage.setItem(MAINTENANCE_CONFIG.storageKey, 'granted');
+              } catch (e) {}
+              window.location.reload();
+            } else if (entered !== null) {
+              alert('Incorrect passphrase');
+            }
+          }
+        });
+      }
+    }
+
+    render(currentLang);
+    document.body.appendChild(shield);
+  }
+})();
+
+/* ============================================
+   HANIWELLNESS — Site Navigation & Interactions
+   ============================================ */
 (function () {
   'use strict';
 
