@@ -57,40 +57,6 @@
                     <p class="hw-line-note" id="hw-line-note">
                         歡迎掃描下方 QR Code 或透過社群直接與 Hani 聯繫預約：
                     </p>
-
-                    <div class="hw-actions">
-                        <a
-                            href="https://line.me/R/ti/p/@"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="hw-btn hw-btn-line"
-                            id="hw-btn-line"
-                        >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right:2px"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.035 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.646 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.573-3.844 2.573-5.293z"/></svg>
-                            開啟 LINE
-                        </a>
-                        <a
-                            href="https://www.instagram.com/hani_c1/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="hw-btn"
-                            style="background: var(--ivory-dark); color: var(--charcoal);"
-                        >
-                            Instagram (@hani_c1)
-                        </a>
-                    </div>
-
-                    <div class="hw-social-row">
-                        <span id="hw-services" style="font-size:12px;opacity:0.8">私人教練 · 空中瑜珈 · 孕婦體適能 · 個人色彩分析 · 私人場地租借</span>
-                        <span class="hw-dot">&middot;</span>
-                        <a
-                            href="https://www.facebook.com/profile.php?id=100083695221580"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="hw-social-link"
-                            id="hw-fb"
-                        >Facebook 專頁</a>
-                    </div>
                 </div>
 
                 <div class="hw-shield-footer" id="hw-footer">
@@ -109,10 +75,7 @@
                         cardTitle: 'Private Consultations & Bookings Open',
                         cardSub: 'Xinyi Studio · Neihu Studio · Private Gym Sessions',
                         lineNote: 'Scan or connect with Tsao Hani directly on LINE for bookings and consultations:',
-                        btnLine: 'Open LINE App',
-                        services: 'Personal Training · Aerial Yoga · Color Analysis · Venue Rental',
                         btnLang: '切換至中文',
-                        fb: 'Facebook',
                         footer: '&copy; 2026 Haniwellness &middot; Tsao Hani. All rights reserved.'
                     },
                     zh: {
@@ -122,10 +85,7 @@
                         cardTitle: '私人課程與色彩諮詢 正常預約中',
                         cardSub: '信義旗艦教室 · 內湖專業教室 · 到府尊爵私教',
                         lineNote: '歡迎掃描下方 QR Code 或透過社群直接與 Hani 聯繫預約：',
-                        btnLine: '開啟 LINE',
-                        services: '私人教練 · 空中瑜珈 · 孕婦體適能 · 個人色彩分析 · 私人場地租借',
                         btnLang: 'English',
-                        fb: 'Facebook 專頁',
                         footer: '&copy; 2026 Haniwellness &middot; 曹哈妮 Tsao Hani. 版權所有'
                     }
                 };
@@ -141,8 +101,6 @@
                     document.getElementById('hw-card-title').textContent = s.cardTitle;
                     document.getElementById('hw-card-sub').textContent = s.cardSub;
                     document.getElementById('hw-line-note').textContent = s.lineNote;
-                    document.getElementById('hw-services').textContent = s.services;
-                    document.getElementById('hw-fb').textContent = s.fb;
                     document.getElementById('hw-footer').innerHTML = s.footer;
                     toggleBtn.textContent = s.btnLang;
                     document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';

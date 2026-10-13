@@ -161,22 +161,6 @@ const MAINTENANCE_CONFIG = {
             </div>
 
             <p class="hw-line-note">${c.lineDesc}</p>
-
-            <div class="hw-actions">
-              <a href="https://line.me/R/ti/p/@" target="_blank" rel="noopener noreferrer" class="hw-btn hw-btn-line">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right:2px"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.035 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.646 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.573-3.844 2.573-5.293z"/></svg>
-                ${c.btnLine}
-              </a>
-              <a href="https://www.instagram.com/hani_c1/" target="_blank" rel="noopener noreferrer" class="hw-btn" style="background:var(--ivory-dark);color:var(--charcoal);">
-                ${c.igBtn}
-              </a>
-            </div>
-
-            <div class="hw-social-row">
-              <span style="font-size:12px;opacity:0.8">${c.services}</span>
-              <span class="hw-dot">&middot;</span>
-              <a href="https://www.facebook.com/profile.php?id=100083695221580" target="_blank" rel="noopener noreferrer" class="hw-social-link">${c.fbBtn}</a>
-            </div>
           </div>
 
           <div class="hw-shield-footer">${c.footer}</div>

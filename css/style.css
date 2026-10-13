@@ -1266,7 +1266,7 @@ body.hw-shield-active {
 .hw-shield-topbar {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-bottom: 24px;
 }
 
@@ -1395,7 +1395,7 @@ body.hw-shield-active {
     font-size: 14px;
     color: var(--charcoal);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .hw-actions {
