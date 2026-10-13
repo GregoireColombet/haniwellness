@@ -31,7 +31,12 @@ const MAINTENANCE_CONFIG = {
   // 2. Check preview access status
   let hasPreviewAccess = false;
   try {
-    hasPreviewAccess = localStorage.getItem(MAINTENANCE_CONFIG.storageKey) === 'granted';
+    hasPreviewAccess = localStorage.getItem(MAINTENANCE_CONFIG.storageKey) === 'granted' ||
+                       sessionStorage.getItem('hw_preview') === '1';
+    if (hasPreviewAccess) {
+      localStorage.setItem(MAINTENANCE_CONFIG.storageKey, 'granted');
+      sessionStorage.setItem('hw_preview', '1');
+    }
   } catch (err) {}
 
   // 3. If preview mode is granted, render floating preview badge and unblock site
@@ -70,14 +75,10 @@ const MAINTENANCE_CONFIG = {
       exitBtn.addEventListener('click', function () {
         try {
           localStorage.removeItem(MAINTENANCE_CONFIG.storageKey);
+          sessionStorage.removeItem('hw_preview');
         } catch (e) {}
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.delete(MAINTENANCE_CONFIG.previewParam);
-          window.location.href = url.pathname + (url.search ? url.search : '');
-        } catch (e) {
-          window.location.reload();
-        }
+        const isZh = window.location.pathname.includes('/zh/');
+        window.location.href = isZh ? '../index.html' : 'index.html';
       });
     }
   }
