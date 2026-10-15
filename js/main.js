@@ -100,7 +100,7 @@ const MAINTENANCE_CONFIG = {
         title: 'Something Transformative<br><em>is Coming Soon</em>',
         desc: 'We are curating an elevated sanctuary dedicated to private personal training, aerial yoga, and professional color styling by Tsao Hani in Taipei.',
         cardTitle: 'Private Consultations &amp; Bookings Open',
-        cardSubtitle: 'Xinyi Studio · Neihu Studio · Private Gym Sessions',
+        cardSubtitle: 'Xinyi Studio · Private Gym Sessions',
         qrAlt: 'LINE QR code to connect with Haniwellness',
         lineDesc: 'Scan or connect with Tsao Hani directly on LINE for bookings and consultations:',
         btnLine: 'Open LINE App',
